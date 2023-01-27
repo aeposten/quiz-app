@@ -13,14 +13,14 @@ function App() {
     fetch(URL)
       .then((response) => response.json())
       .then((questions) => {
-        questions.results.map((question) => {
+         questions.results.map((question) => {
           editedQuestions.push({
             id: nanoid(),
             questionTxt: decodeURIComponent(question.question),
             answers: generateAllAnswers(question),
           });
         });
-        setQuestions(editedQuestions);
+        return setQuestions(editedQuestions);
       });
   }
 
