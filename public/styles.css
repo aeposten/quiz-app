@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap");
 
 :root {
-    --mainbg: #fdfcdc;
-    --bluetext: #0081a7;
+  --mainbg: #fdfcdc;
+  --bluetext: #0081a7;
 }
 *,
 *::before,
@@ -24,7 +24,7 @@ body {
   background-color: var(--mainbg);
   -webkit-font-smoothing: antialiased;
   font-family: "Karla", sans-serif;
-  color: var(--bluetext)
+  color: var(--bluetext);
 }
 img,
 picture,
@@ -64,30 +64,35 @@ h6 {
 }
 
 .question {
-    margin: 1em 0.25em;
-    font-size: 1rem;
-    font-weight: bold;
+  margin: 1em 0.25em;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .answers {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .answer {
-    margin: 0.25em;
-    padding: 0.25em;
-    border: 0.1em solid var(--bluetext);
-    border-radius: 1em;
+  margin: 0.25em;
+  padding: 0.25em;
+  border: 0.1em solid var(--bluetext);
+  border-radius: 1em;
+}
+
+.selected {
+  background-color: var(--bluetext);
+  color: var(--mainbg);
 }
 
 button {
-    padding: 0.25em;
-    background-color: var(--bluetext);
-    border: none;
-    border-radius: 1em;
-    color: var(--mainbg);
-    font-weight: bold;
+  padding: 0.25em;
+  background-color: var(--bluetext);
+  border: none;
+  border-radius: 1em;
+  color: var(--mainbg);
+  font-weight: bold;
 }
