@@ -84,6 +84,7 @@ h6 {
 }
 
 button {
+    padding: 0.25em;
     background-color: var(--bluetext);
     border: none;
     border-radius: 1em;

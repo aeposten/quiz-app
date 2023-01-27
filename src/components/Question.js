@@ -1,8 +1,8 @@
 import Answer from "./Answers";
-function Question ({question}) {
+function Question ({question, setSelectedAnswer}) {
 
     const answerElements = question.answers.map((answer) => 
-        <Answer answer={answer} key={answer.id}/>
+        <Answer answer={answer} key={answer.id} setSelectedAnswer={() => setSelectedAnswer(question.id, answer.id)}/>
     )
     return (
         <section className="question">

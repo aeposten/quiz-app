@@ -1,6 +1,6 @@
-function Answer({answer}) {
+function Answer({answer, setSelectedAnswer}) {
     return (
-        <div className="answer">
+        <div className="answer" onClick={setSelectedAnswer}>
             {decodeURIComponent(answer.answer)}
         </div>
     )
