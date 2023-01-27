@@ -3,6 +3,8 @@
 :root {
   --mainbg: #fdfcdc;
   --bluetext: #0081a7;
+  --correct: #06d6a0;
+  --incorrect: #d00000;
 }
 *,
 *::before,
@@ -86,6 +88,16 @@ h6 {
 .selected {
   background-color: var(--bluetext);
   color: var(--mainbg);
+}
+
+.correct {
+    background-color: var(--correct);
+    color: var(--mainbg)
+}
+
+.incorrect {
+    background-color: var(--incorrect);
+    color: var(--mainbg)
 }
 
 button {

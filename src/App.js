@@ -7,6 +7,7 @@ const URL = "https://opentdb.com/api.php?amount=10&encode=url3986";
 function App() {
   const [started, setStarted] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [answersChecked, setAnswersChecked] = useState(false);
 
   function fetchQuestions() {
     const editedQuestions = [];
@@ -69,10 +70,15 @@ function App() {
     );
   }
 
-
   function startGame() {
     fetchQuestions();
     setStarted(true);
+    setAnswersChecked(false);
+  }
+
+  function checkAnswers() {
+    setAnswersChecked(true);
+    setQuestions((prevQuestions) => prevQuestions);
   }
 
   function setQuestionHtml() {
@@ -81,20 +87,37 @@ function App() {
         question={question}
         key={question.id}
         setSelectedAnswer={setSelectedAnswer}
+        answersChecked={answersChecked}
       />
     ));
     return questionElements;
   }
 
   console.log(questions);
-
+  function setButtons() {
+    let button;
+    if (!started && !answersChecked) {
+      button = (
+        <button className="fetch-btn" onClick={startGame}>
+          Get Questions
+        </button>
+      );
+    } else if (started && !answersChecked) {
+      button = <button onClick={checkAnswers}>Check Answers</button>;
+    } else {
+      button = (
+        <button className="fetch-btn" onClick={startGame}>
+          New Game
+        </button>
+      );
+    }
+    return button;
+  }
   return (
     <main className="App">
       <h1>SUPER FUN QUIZ</h1>
       {started && setQuestionHtml()}
-      <button className="fetch-btn" onClick={startGame}>
-        Get Questions
-      </button>
+      {setButtons()}
     </main>
   );
 }
