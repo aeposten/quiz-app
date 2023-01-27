@@ -54,7 +54,7 @@ function App() {
   function setSelectedAnswer(questionId, answerId) {
     setQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
-        return question.id === questionId
+        return question.id === questionId && !question.isAnswered
           ? {
               ...question,
               isAnswered: !question.isAnswered,
@@ -69,7 +69,6 @@ function App() {
     );
   }
 
-  // { ...question, isAnswered: !question.isAnswered }
 
   function startGame() {
     fetchQuestions();
