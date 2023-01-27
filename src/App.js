@@ -14,7 +14,7 @@ function App() {
       .then((response) => response.json())
       .then((questions) => {
          questions.results.map((question) => {
-          editedQuestions.push({
+          return editedQuestions.push({
             id: nanoid(),
             questionTxt: decodeURIComponent(question.question),
             answers: generateAllAnswers(question),
