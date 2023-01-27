@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap");
+
+:root {
+    --mainbg: #fdfcdc;
+    --bluetext: #0081a7;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  line-height: 1.5;
+  background-color: var(--mainbg);
+  -webkit-font-smoothing: antialiased;
+  font-family: "Karla", sans-serif;
+  color: var(--bluetext)
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+#root,
+#__next {
+  isolation: isolate;
+}
+
+.App {
+  margin: 0;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.question {
+    margin: 1em 0.25em;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.answers {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.answer {
+    margin: 0.25em;
+    padding: 0.25em;
+    border: 0.1em solid var(--bluetext);
+    border-radius: 1em;
+}
+
+button {
+    background-color: var(--bluetext);
+    border: none;
+    border-radius: 1em;
+    color: var(--mainbg);
+    font-weight: bold;
+}

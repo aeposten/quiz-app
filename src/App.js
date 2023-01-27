@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Questions from "./components/Questions";
 
 import { nanoid } from "nanoid";
@@ -56,12 +56,13 @@ function App() {
   console.log(questions);
   console.log(started);
   return (
-    <div className="App">
+    <main className="App">
+      <h1>SUPER FUN QUIZ</h1>
       {started && <Questions questions={questions} />}
       <button className="fetch-btn" onClick={startGame}>
         Get Questions
       </button>
-    </div>
+    </main>
   );
 }
 
