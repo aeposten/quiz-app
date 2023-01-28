@@ -8,6 +8,7 @@ function App() {
   const [started, setStarted] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [answersChecked, setAnswersChecked] = useState(false);
+  const [score, setScore] = useState(0);
 
   function fetchQuestions() {
     const editedQuestions = [];
@@ -74,11 +75,25 @@ function App() {
     fetchQuestions();
     setStarted(true);
     setAnswersChecked(false);
+    setScore(0);
   }
 
   function checkAnswers() {
     setAnswersChecked(true);
     setQuestions((prevQuestions) => prevQuestions);
+    calculateScore();
+  }
+
+  function calculateScore() {
+    questions.map((question) => {
+      return question.isAnswered
+        ? question.answers.map((answer) => {
+            return answer.isCorrect && answer.isSelected
+              ? setScore((prevScore) => prevScore + 1)
+              : setScore((prevScore) => prevScore + 0);
+          })
+        : setScore((prevScore) => prevScore + 0);
+    });
   }
 
   function setQuestionHtml() {
@@ -94,6 +109,7 @@ function App() {
   }
 
   console.log(questions);
+  console.log(score);
   function setButtons() {
     let button;
     if (!started && !answersChecked) {
@@ -106,9 +122,12 @@ function App() {
       button = <button onClick={checkAnswers}>Check Answers</button>;
     } else {
       button = (
-        <button className="fetch-btn" onClick={startGame}>
-          New Game
-        </button>
+        <div>
+          You got {score} / {questions.length} correct answers{" "}
+          <button className="fetch-btn" onClick={startGame}>
+            New Game
+          </button>
+        </div>
       );
     }
     return button;

@@ -97,7 +97,8 @@ h6 {
 
 .incorrect {
     background-color: var(--incorrect);
-    color: var(--mainbg)
+    color: var(--mainbg);
+    opacity: 50%;
 }
 
 button {
