@@ -73,9 +73,9 @@ function App() {
 
   function startGame() {
     fetchQuestions();
-    setStarted(true);
-    setAnswersChecked(false);
     setScore(0);
+    setAnswersChecked(false);
+    setStarted(true);
   }
 
   function checkAnswers() {

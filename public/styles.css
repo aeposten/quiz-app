@@ -83,21 +83,20 @@ h6 {
   padding: 0.25em;
   border: 0.1em solid var(--bluetext);
   border-radius: 1em;
+  color: var(--bluetext)
 }
 
 .selected {
   background-color: var(--bluetext);
-  color: var(--mainbg);
+  color: var(--mainbg)
 }
 
 .correct {
     background-color: var(--correct);
-    color: var(--mainbg)
 }
 
 .incorrect {
     background-color: var(--incorrect);
-    color: var(--mainbg);
     opacity: 50%;
 }
 
