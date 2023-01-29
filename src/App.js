@@ -1,17 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Question from "./components/Question";
-
+import OptionsForm from "./components/OptionsForm";
 import { nanoid } from "nanoid";
-const URL = "https://opentdb.com/api.php?amount=10&encode=url3986";
 
 function App() {
   const [started, setStarted] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [answersChecked, setAnswersChecked] = useState(false);
   const [score, setScore] = useState(0);
+  const [gameOptions, setGameOptions] = useState({
+    amount: 5,
+    difficulty: "",
+    type: "",
+    category: "",
+  });
 
+  function generateGameOptions(option, selection) {
+    const options = selection ? `&${option}=${selection}` : "";
+    return options;
+  }
   function fetchQuestions() {
     const editedQuestions = [];
+    const URL = `https://opentdb.com/api.php?amount=${
+      gameOptions.amount}${generateGameOptions("category", gameOptions.category)}${generateGameOptions("difficulty", gameOptions.difficulty)}${generateGameOptions("type", gameOptions.type)}&encode=url3986`
+      console.log(URL)
     fetch(URL)
       .then((response) => response.json())
       .then((questions) => {
@@ -27,28 +39,30 @@ function App() {
       });
   }
 
+  useEffect(() => {
+    fetchQuestions();
+  }, [started, gameOptions]);
+
+  function generateAnswerObject(answer, isCorrect) {
+    return {
+      id: nanoid(),
+      answer: decodeURIComponent(answer),
+      isCorrect: isCorrect,
+      isSelected: false,
+    };
+  }
+
   function generateAllAnswers(question) {
     const answerObjects = [];
     const correct = question.correct_answer;
     let incorrect = question.incorrect_answers;
-    const incorrectLength = incorrect.length;
-    const index = Math.floor(Math.random() * incorrectLength);
+    const index = Math.floor(Math.random() * incorrect.length);
     incorrect.splice(index, 0, correct);
 
     incorrect.map((answer) => {
       return answer === correct
-        ? answerObjects.push({
-            id: nanoid(),
-            answer: decodeURIComponent(answer),
-            isCorrect: true,
-            isSelected: false,
-          })
-        : answerObjects.push({
-            id: nanoid(),
-            answer: decodeURIComponent(answer),
-            isCorrect: false,
-            isSelected: false,
-          });
+        ? answerObjects.push(generateAnswerObject(answer, true))
+        : answerObjects.push(generateAnswerObject(answer, false));
     });
     return answerObjects;
   }
@@ -71,11 +85,22 @@ function App() {
     );
   }
 
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setGameOptions({
+      ...gameOptions,
+      [name]: value,
+    });
+  }
+
   function startGame() {
-    fetchQuestions();
-    setScore(0);
-    setAnswersChecked(false);
-    setStarted(true);
+    setStarted((prevStarted) => !prevStarted)
+    setScore((prevScore) => 0);
+    setAnswersChecked((prevChecked) => false);
+    setGameOptions((prevOptions) => ({amount: 5,
+      difficulty: "",
+      type: "",
+      category: ""}))
   }
 
   function checkAnswers() {
@@ -95,30 +120,20 @@ function App() {
         : setScore((prevScore) => prevScore + 0);
     });
   }
+  const questionElements = questions.map((question) => (
+    <Question
+      question={question}
+      key={question.id}
+      setSelectedAnswer={setSelectedAnswer}
+      answersChecked={answersChecked}
+    />
+  ));
 
-  function setQuestionHtml() {
-    const questionElements = questions.map((question) => (
-      <Question
-        question={question}
-        key={question.id}
-        setSelectedAnswer={setSelectedAnswer}
-        answersChecked={answersChecked}
-      />
-    ));
-    return questionElements;
-  }
-
-  console.log(questions);
-  console.log(score);
   function setButtons() {
     let button;
-    if (!started && !answersChecked) {
-      button = (
-        <button className="fetch-btn" onClick={startGame}>
-          Get Questions
-        </button>
-      );
-    } else if (started && !answersChecked) {
+    if (!started){
+      button = <button onClick={startGame}>Start Game</button>
+    }else if (started &&!answersChecked) {
       button = <button onClick={checkAnswers}>Check Answers</button>;
     } else {
       button = (
@@ -132,10 +147,18 @@ function App() {
     }
     return button;
   }
+
   return (
     <main className="App">
       <h1>SUPER FUN QUIZ</h1>
-      {started && setQuestionHtml()}
+      {!started && (
+        <OptionsForm
+          gameOptions={gameOptions}
+          handleChange={handleChange}
+          startGame={startGame}
+        />
+      )}
+      {started && questionElements}
       {setButtons()}
     </main>
   );
